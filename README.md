@@ -454,3 +454,158 @@ git commit -m "add edit and delete article"
 git push origin Aritcle-model
 ```
 ![image](https://ws4.sinaimg.cn/large/006tNc79gy1fq4ewvqqtsj31d80sc45f.jpg)
+
+
+create the ability to comment
+generate model & controller
+creating associations
+actions,form,show comments
+model links between pages
+hopefully no errors
+
+# SECTION 6
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+```
+git checkout -b comment
+rails generate model Comment commenter:string body:text article:references
+rake db:migrate
+--
+app/models/article.rb
+---
+class Article < ApplicationRecord
+  has_many :comments
+end
+---
+config/routes.rb
+---
+Rails.application.routes.draw do
+  get 'welcome/index'
+  root 'welcome#index'
+  resources :articles do
+    resources :comments
+  end
+end
+---
+app/views/articles/show.html.erb
+---
+<p><strong>title</strong>
+  <%= @article.title %>
+</p>
+
+<p><strong>Text:</strong>
+    <%= @article.text %>
+</p>
+
+<h2> add comment</h2>
+<%= form_for([@article,@article.comments.build]) do |f| %>
+<p>
+  <%= f.label :commenter %>
+  <%= f.text_field :commenter %>
+</p>
+
+<p>
+  <%= f.label :body %>
+  <%= f.text_area :body %>
+</p>
+
+<p>
+  <%= f.submit %>
+</p>
+  <% end %>
+
+
+<p>
+<%= link_to 'back', articles_path %>
+<%= link_to 'home', welcome_index_path %>
+</p>
+---
+```
+![image](https://ws1.sinaimg.cn/large/006tNc79gy1fq4glvmqifj30oo0g2gmj.jpg)
+
+
+need to look at the
+routes for the comments
+to find right
+actions and paths
+```
+app/controllers/comments_controller.rb
+---
+class CommentsController < ApplicationController
+
+ def create
+   @article = Article.find(params[:article_id])
+   @comment = @article.comments.create(comment_params)
+   redirect_to article_path(@article)
+ end
+
+
+private
+
+  def comment_params
+    params.require(:comment).permit(:commenter, :body)
+  end
+
+end
+---
+app/views/articles/show.html.erb
+---
+<p><strong>title</strong>
+  <%= @article.title %>
+</p>
+
+<p><strong>Text:</strong>
+    <%= @article.text %>
+</p>
+
+<hr>
+<h2> comments </h2>
+<% @article.comments.each do |comment| %>
+
+<p>
+<strong>commenter:</strong>
+<%= comment.commenter %>
+</p>
+
+
+<p>
+<strong> comment</strong>
+<%= comment.body %>
+</p>
+
+<% end %>
+
+
+
+
+
+<h2> add comment</h2>
+<%= form_for([@article,@article.comments.build]) do |f| %>
+<p>
+  <%= f.label :commenter %>
+  <%= f.text_field :commenter %>
+</p>
+
+<p>
+  <%= f.label :body %>
+  <%= f.text_area :body %>
+</p>
+
+<p>
+  <%= f.submit %>
+</p>
+  <% end %>
+
+
+<p>
+<%= link_to 'back', articles_path %>
+<%= link_to 'home', welcome_index_path %>
+</p>
+
+```
+![image](https://ws3.sinaimg.cn/large/006tNc79gy1fq4hwcrugkj30p40mqgmv.jpg)
+```
+git status
+git add .
+git commit -m "generate model comment and controller comments"
