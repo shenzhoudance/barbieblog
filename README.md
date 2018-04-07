@@ -237,4 +237,9 @@ http://localhost:3000/articles/new
 http://localhost:3000/articles/3
 ![image](https://ws4.sinaimg.cn/large/006tNc79gy1fq4aw1bt7xj30lk0723z4.jpg)
 ```
+git status
+git add .
+git commit -m "edited show and create actions"
+git push origin Aritcle-model  
 ```
+![image](https://ws2.sinaimg.cn/large/006tNc79gy1fq4ayrmtq2j31ek0nyjxf.jpg)
