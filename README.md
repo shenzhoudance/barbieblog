@@ -253,3 +253,87 @@ hopefully no errors
 based on guides.rubyonrails.org
 
 ```
+app/controllers/articles_controller.rb
+---
+class ArticlesController < ApplicationController
+  def index
+    @article = Article.all
+    end
+
+  def new
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def create
+    #render plain: params[:article].inspect
+    @article = Article.new(article_params)
+    @article.save
+    redirect_to @article
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:text)
+  end
+
+  end
+  ---
+  app/views/articles/show.html.erb
+  ---
+  <p><strong>title</strong>
+    <%= @article.title %>
+  </p>
+
+  <p><strong>Text:</strong>
+      <%= @article.text %>
+  </p>
+
+  <p>
+  <%= link_to 'back', articles_path %>
+  <%= link_to 'home', welcome_index_path %>
+  </p>
+---
+app/views/articles/index.html.erb
+---
+
+<h1>list of all article</h1>
+  <table>
+    <tr>
+      <th>title</th>
+      <th>text</th>
+    <tr>
+
+  <% @article.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= truncate(article.text, length: 75) %></td>
+      <td><%= link_to 'show', article_path(article) %></td>
+    </tr>
+    <% end %>
+</table>
+
+<p>
+<%= link_to 'home', welcome_index_path %>
+<%= link_to 'new', new_article_path %>
+</p>
+---
+app/views/welcome/index.html.erb
+---
+<h1>Welcome to My Blog</h1>
+<p><%= link_to 'My Blog', articles_path %></p>
+---
+```
+![image](https://ws2.sinaimg.cn/large/006tNc79gy1fq4c0dqcqgj30r609ajs0.jpg)
+![image](https://ws1.sinaimg.cn/large/006tNc79gy1fq4c0iwi25j30qa0cc0tu.jpg)
+![image](https://ws4.sinaimg.cn/large/006tNc79gy1fq4c07eaylj30j008kdgj.jpg)
+```
+clear
+git status
+git add .
+git commit -m "added index action and template,created a list of blog entries in template index, created links between pages"
+git push origin Aritcle-model
+```
+![image](https://ws3.sinaimg.cn/large/006tNc79gy1fq4bw1gbo7j31kg0xmguq.jpg)
