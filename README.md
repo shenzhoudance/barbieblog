@@ -337,3 +337,111 @@ git commit -m "added index action and template,created a list of blog entries in
 git push origin Aritcle-model
 ```
 ![image](https://ws3.sinaimg.cn/large/006tNc79gy1fq4bw1gbo7j31kg0xmguq.jpg)
+
+edit article
+delete article
+routes,action,and views
+a few mode links
+some errors
+
+
+# SECTION 5
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+```
+app/controllers/articles_controller.rb
+---
+class ArticlesController < ApplicationController
+  def index
+    @article = Article.all
+    end
+
+  def new
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def edit
+      @article = Article.find(params[:id])
+  end
+
+  def update
+      @article = Article.find(params[:id])
+      if @article.update(article_params)
+         redirect_to @article
+      else
+        render 'edit'
+    end
+  end
+
+
+
+  def create
+    #render plain: params[:article].inspect
+    @article = Article.new(article_params)
+    @article.save
+    redirect_to @article
+  end
+
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to articles_path
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:text)
+  end
+
+  end
+---
+app/views/articles/index.html.erb
+---
+
+<h1>list of all article</h1>
+  <table>
+    <tr>
+      <th>title</th>
+      <th>text</th>
+    <tr>
+
+  <% @article.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= truncate(article.text, length: 75) %></td>
+      <td><%= link_to 'show', article_path(article) %></td>
+      <td><%= link_to 'edit', edit_article_path(article) %></td>
+      <td><%= link_to 'Delete',article_path(article),
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>
+       </td>
+    </tr>
+    <% end %>
+</table>
+
+<p>
+<%= link_to 'home', welcome_index_path %>
+<%= link_to 'new', new_article_path %>
+</p>
+---
+app/views/articles/edit.html.erb
+---
+<h1>edit Articles</h1>
+<%= form_for @article do |f| %>
+  <p>
+    <%= f.label :title %> <br>
+    <%= f.text_field :title  %>
+  </p>
+  <p>
+    <%= f.label :text %> <br>
+    <%= f.text_area :text %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+---
