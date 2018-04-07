@@ -1,0 +1,21 @@
+
+<h1>list of all article</h1>
+  <table>
+    <tr>
+      <th>title</th>
+      <th>text</th>
+    <tr>
+
+  <% @article.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= truncate(article.text, length: 75) %></td>
+      <td><%= link_to 'show', article_path(article) %></td>
+    </tr>
+    <% end %>
+</table>
+
+<p>
+<%= link_to 'home', welcome_index_path %>
+<%= link_to 'new', new_article_path %>
+</p>
