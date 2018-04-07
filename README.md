@@ -445,3 +445,12 @@ app/views/articles/edit.html.erb
   </p>
 <% end %>
 ---
+```
+![image](https://ws3.sinaimg.cn/large/006tNc79gy1fq4eyvj4ouj30ok0au3zi.jpg)
+```
+git status
+git add .
+git commit -m "add edit and delete article"
+git push origin Aritcle-model
+```
+![image](https://ws4.sinaimg.cn/large/006tNc79gy1fq4ewvqqtsj31d80sc45f.jpg)
