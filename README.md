@@ -171,3 +171,20 @@ git status
 git add .
 git commit -m "add create controller & edit articles new"
 git push origin Articles
+```
+![image](https://ws1.sinaimg.cn/large/006tNc79gy1fq47px9jrtj31fi0vq10h.jpg)
+
+
+create a model
+migrate to database
+more routes,actions, & views
+hopefully no errors
+
+# SECTION 3 GETTING STARTED WITH Rails
+BASED ON GUIDES.RUBYONRAILS.ORG
+
+```
+git checkout -b Aritcle-model
+rails generate model Article title:string text:text
+rake db:migrate
+```
