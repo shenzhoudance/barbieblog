@@ -187,4 +187,54 @@ BASED ON GUIDES.RUBYONRAILS.ORG
 git checkout -b Aritcle-model
 rails generate model Article title:string text:text
 rake db:migrate
+git status
+git add .
+git commit -m "generated to model articles and migrated the database"
+```
+![image](https://ws4.sinaimg.cn/large/006tNc79gy1fq4ag67mtaj31kw10vguz.jpg)
+
+section 3b
+saving date in the controller
+model - view - controller
+communication
+```
+app/controllers/articles_controller.rb
+---
+class ArticlesController < ApplicationController
+  def new
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def create
+    #render plain: params[:article].inspect
+    @article = Article.new(article_params)
+    @article.save
+    redirect_to @article
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:text)
+  end
+
+  end
+  ---
+  app/views/articles/show.html.erb
+  ---
+  <p><strong>title</strong>
+    <%= @article.title %>
+  </p>
+
+  <p><strong>Text:</strong>
+      <%= @article.text %>
+  </p>
+---
+```
+http://localhost:3000/articles/new
+http://localhost:3000/articles/3
+![image](https://ws4.sinaimg.cn/large/006tNc79gy1fq4aw1bt7xj30lk0723z4.jpg)
+```
 ```
