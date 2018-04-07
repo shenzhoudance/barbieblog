@@ -1,24 +1,33 @@
-# README
+# 构建一个 barbieblog 博客
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 课前准备
 
-Things you may want to cover:
+Prerequisite（see links below）
 
-* Ruby version
++ Installed Ruby >= 2.0, Ruby on Rails >= 5.0, sqlite 3
++ Some Experience With Working With Terminal/Command line
++ A Text Editor > atom ,sublime ,aptana stuio(ide）
++ Git Version Control System
 
-* System dependencies
+# SECTION 1 GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
 
-* Configuration
+```
+mkdir workspace
+cd workspace
+rails new barbieblog
 
-* Database creation
+ls
+cd barbieblog
+atom .
+rails server
 
-* Database initialization
+git init
+git status
+git add .
+git commit -m "initial commit"
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+git remote add origin https://github.com/shenzhoudance/barbieblog.git
+git push -u origin master
+```
+![image](https://ws3.sinaimg.cn/large/006tNc79gy1fq45qbb7uij30wk0qm17q.jpg)
