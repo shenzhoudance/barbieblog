@@ -181,7 +181,7 @@ more routes,actions, & views
 hopefully no errors
 
 # SECTION 3 GETTING STARTED WITH Rails
-BASED ON GUIDES.RUBYONRAILS.ORG
+based on guides.rubyonrails.org
 
 ```
 git checkout -b Aritcle-model
@@ -243,3 +243,13 @@ git commit -m "edited show and create actions"
 git push origin Aritcle-model  
 ```
 ![image](https://ws2.sinaimg.cn/large/006tNc79gy1fq4ayrmtq2j31ek0nyjxf.jpg)
+
+index action and view list all articles_path
+create links between all pages
+deeper route understanding
+hopefully no errors
+
+# SECTION 3 GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+```
