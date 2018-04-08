@@ -1062,7 +1062,22 @@ gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
 gem install sprockets-rails
 bundle installl
 ```
+```
+app/assets/stylesheets/application.scss
+---
+@import "bootstrap";
 
+app/assets/javascripts/application.js
+---
+//= require rails-ujs
+//= require popper
+//= require bootstrap-sprockets
+//= require turbolinks
+//= require_tree .
+---
+```
+![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq52uyrqjwj30oa0do403.jpg)
+![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq52v3b7m5j30r20fumys.jpg)
 1、paste
 gem 'jquery-rails','~> 4.3', '>= 4.3.1'
 into the gemfile
@@ -1072,3 +1087,11 @@ into the Terminal
 3、in the terminl type
 bundle install
 to make use of the gem
+
+
+```
+git status
+git add .
+git commit -m "added bootstrap gem and sprockets gem and updated bundle and added bootstarp to scss and js files "
+git push origin bootstarp
+```
