@@ -845,3 +845,103 @@ git commit -m "added vaildations to create article"
 git push origin comment
 ```
 ![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq4znohn1bj31ea0nq44k.jpg)
+
+creating partials
+adding created at times
+adding basic security
+errors!!!
+next time -bootstarp 4!!
+
+# SECTION 8
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+creating partials
+snippits of html/ruby code stored
+in one html.erb file and called
+upon in another html.erb file
+
+```
+git checkout -b partials-form
+---
+app/views/articles/show.html.erb
+---
+
+<p><strong>title</strong>
+  <%= @article.title %>
+</p>
+<p><strong>TIME:</strong>
+    <%= @article.created_at %>
+</p>
+
+<p><strong>Text:</strong>
+    <%= @article.text %>
+</p>
+
+<hr>
+<%= render 'comments/comment' %>
+<hr>
+<%= render 'comments/form' %>
+
+<p>
+<%= link_to 'back', articles_path %>
+<%= link_to 'home', welcome_index_path %>
+</p>
+---
+app/views/comments/_form.html.erb
+---
+<!-- form partial for comments -->
+<h3> The Rendered Form</h3>
+<h2> add comment</h2>
+<%= form_for([@article,@article.comments.build]) do |f| %>
+<p>
+  <%= f.label :commenter %>
+  <%= f.text_field :commenter %>
+</p>
+
+<p>
+  <%= f.label :body %>
+  <%= f.text_area :body %>
+</p>
+
+<p>
+  <%= f.submit %>
+</p>
+  <% end %>
+---
+app/views/comments/_comment.html.erb
+---
+<h3> Comment Partial </h3>
+
+<h2> comments </h2>
+<% @article.comments.each do |comment| %>
+
+<p>
+<strong>commenter:</strong>
+<%= comment.commenter %>
+</p>
+<p><strong>TIME:</strong>
+    <%= comment.created_at %>
+</p>
+
+<p>
+<strong> comment</strong>
+<%= comment.body %>
+</p>
+
+<p>
+  <%= link_to 'Delete comment',[comment.article, comment],
+           method: :delete,
+           data: { confirm: 'Are you sure?' } %>
+</p>
+
+<% end %>
+---
+```
+![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq514h898pj30ls0usdhq.jpg)
+
+basic http
+authenication
+preventing visitors from
+creating,editing,deleting articles
+add deleting comments

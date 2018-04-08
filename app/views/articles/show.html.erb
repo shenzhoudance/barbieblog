@@ -1,5 +1,9 @@
+
 <p><strong>title</strong>
   <%= @article.title %>
+</p>
+<p><strong>TIME:</strong>
+    <%= @article.created_at %>
 </p>
 
 <p><strong>Text:</strong>
@@ -7,48 +11,11 @@
 </p>
 
 <hr>
-<h2> comments </h2>
-<% @article.comments.each do |comment| %>
-
-<p>
-<strong>commenter:</strong>
-<%= comment.commenter %>
-</p>
+<%= render 'comments/comment' %>
+<hr>
+<%= render 'comments/form' %>
 
 
-<p>
-<strong> comment</strong>
-<%= comment.body %>
-</p>
-
-<p>
-  <%= link_to 'Delete comment',[comment.article, comment],
-           method: :delete,
-           data: { confirm: 'Are you sure?' } %>
-</p>
-
-<% end %>
-
-
-
-
-
-<h2> add comment</h2>
-<%= form_for([@article,@article.comments.build]) do |f| %>
-<p>
-  <%= f.label :commenter %>
-  <%= f.text_field :commenter %>
-</p>
-
-<p>
-  <%= f.label :body %>
-  <%= f.text_area :body %>
-</p>
-
-<p>
-  <%= f.submit %>
-</p>
-  <% end %>
 
 
 <p>
