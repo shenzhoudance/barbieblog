@@ -945,3 +945,99 @@ authenication
 preventing visitors from
 creating,editing,deleting articles
 add deleting comments
+```
+app/controllers/articles_controller.rb
+---
+class ArticlesController < ApplicationController
+http_basic_authenticate_with name: "xiaowei", password: "123456",
+except: [:index, :show]
+
+  def index
+    @article = Article.all
+    end
+
+  def new
+    @article = Article.new
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def edit
+      @article = Article.find(params[:id])
+  end
+
+  def update
+      @article = Article.find(params[:id])
+      if @article.update(article_params)
+         redirect_to @article
+      else
+        render 'edit'
+    end
+  end
+
+
+
+  def create
+    #render plain: params[:article].inspect
+    @article = Article.new(article_params)
+    if @article.save
+    redirect_to @article
+   else
+    render 'new'
+   end
+  end
+
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to articles_path
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:text)
+  end
+
+  end
+---
+app/controllers/comments_controller.rb
+---
+class CommentsController < ApplicationController
+  http_basic_authenticate_with name: "xiaowei", password: "12345678",
+  except: [:index, :show]
+
+ def create
+   @article = Article.find(params[:article_id])
+   @comment = @article.comments.create(comment_params)
+   redirect_to article_path(@article)
+ end
+
+
+ def destroy
+    @article = Article.find(params[:article_id])
+    @comment = @article.comments.find(params[:id])
+    @comment.destroy
+    redirect_to article_path(@article)
+
+ end
+
+private
+
+  def comment_params
+    params.require(:comment).permit(:commenter, :body)
+  end
+
+end
+---
+```
+```
+git status
+git add .
+git commit -m "made partials of comment form & http security"
+git push origin partials-form
+```
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq51mkwhwwj31ke0n2tbu.jpg)
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq51l2wrxpj31k00t4jze.jpg)
