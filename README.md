@@ -1606,5 +1606,229 @@ h1
 ```
 ![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq5dautfxtj31kw0jnmz9.jpg)
 
+```
+git add .
+git commit -m "add nav & edit color
+git push origin nav
+```
+![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq5dd7y03sj31bw0iegqo.jpg)
+
 one more bootstrap session
 then back to ruby on rails development
+
+
+bootstrap 4
+convert navigation links to therubyracer
+add image csrf_meta_tag
+edit created_at times format
+will be using firefox - not chrome
+
+
+# SECTION 11 - part 2
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+```
+app/views/shared/_navigation.html.erb
+---
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">xiaoweiblog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+      <%= link_to 'Home', welcome_index_path, class:'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Blog', articles_path, class:'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-ligth my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+---
+app/views/welcome/index.html.erb
+---
+<div class="row" style="padding-top:8%;">
+  <div class="col"></div>
+  <div class="col-md-7 text-center">
+    <%= image_tag 'YAN-JIANG.jpg', style:"width:100%" %>
+    <div class="jumbotron">
+
+
+    <h1>欢迎来到才华横溢的世界</h1>
+    <p><%= link_to '进入我的世界', articles_path, class: "btn btn-lg btn-welcome" %></p>
+      </div><!-- jumbotron -->
+    </div><!-- col-md-7 -->
+   <div class="col"></div>
+</div><!-- row -->
+---
+```
+```
+app/views/comments/_form.html.erb
+---
+<!-- form partial for comments -->
+<h3> The Rendered Form</h3>
+<h4> add comment</h4>
+<%= form_for([@article,@article.comments.build]) do |f| %>
+<div class="field" style="100%;">
+
+</div>
+
+<p>
+  <%= f.label :commenter %>
+  <%= f.text_field :commenter, class: "form-control" %>
+</p>
+
+<p>
+  <%= f.label :body %>
+  <%= f.text_area :body, class: "form-control" %>
+</p>
+
+<p>
+  <%= f.submit class: "btn btn-lg btn-success" %>
+</p>
+  <% end %>
+---
+app/views/articles/index.html.erb
+---
+<div class="row">
+  <div class="col"></div>
+    <div class="col-md-10">
+
+<h1>list of all article</h1>
+<p>
+  <%= link_to 'Create NEW Article', new_article_path, class:'btn btn-lg btn-info' %>
+</p>
+  <table class="table table-hover table-striped table-responsive-xs table-danger">
+<thead>
+    <tr>
+      <th>title</th>
+      <th>text</th>
+      <th colspan="3">Editing option</th>
+    <tr>
+</thead>
+  <% @article.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= truncate(article.text, length: 75) %></td>
+      <td><%= link_to 'show', article_path(article), class:'btn btn-sm btn-info' %></td>
+      <td><%= link_to 'edit', edit_article_path(article), class:'btn btn-sm btn-warning' %></td>
+      <td><%= link_to 'Delete',article_path(article),
+               method: :delete,
+               data: { confirm: 'Are you sure?' } ,class:'btn btn-sm btn-danger'%>
+       </td>
+    </tr>
+    <% end %>
+</table>
+
+<p>
+<%= link_to 'home', welcome_index_path, class:'btn btn-sm btn-primary' %>
+<%= link_to 'new', new_article_path %>
+</p>
+
+</div><!-- col-md-10 -->
+ <div class="col"></div>
+</div><!-- row -->
+---
+app/views/articles/show.html.erb
+---
+<div class="row">
+  <div class="col"></div>
+    <div class="col-md-7">
+<%= image_tag 'YAN-JIANG.jpg', style:"width:100%" %>
+<p>
+  <h2>TITLE</h2>
+  <strong><%= @article.title %></strong>
+</p>
+<p>
+    <%= @article.created_at.strftime('%A %-b %-d, %Y | %l.%M %p') %>
+</p>
+
+<p>
+  <h3>ARTICLE</h3>
+    <%= @article.text %>
+</p>
+
+<hr>
+<%= render 'comments/comment' %>
+<hr>
+<%= render 'comments/form' %>
+
+
+<p>
+<%= link_to 'Back', articles_path, class:'btn btn-md btn-info' %>
+<%= link_to 'Home', welcome_index_path, class:'btn btn-md btn-primary' %>
+</p>
+
+</div><!-- col-md-7 -->
+ <div class="col"></div>
+</div><!-- row -->
+```
+```
+app/assets/stylesheets/welcome.scss
+---
+.btn-welcome
+{
+  background-color: #f31346;
+  color: #efeeef
+}
+
+.btn-welcome.hover
+{
+  background-color: #ff2578;
+  color: #ffffff;
+}
+
+h1
+{
+  margin-bottom: 20px;
+}
+---
+app/assets/stylesheets/application.scss
+---
+body {
+  min-height: 75rem;
+  padding-top: 4.5rem;
+  background-color: #ffddee;
+}
+
+.container
+{
+  padding-top:15px;
+}
+
+
+thead
+{
+  background-color: #553344;
+  color: #ffffff;
+}
+
+.form-control
+{
+  background-color: #efeeef;
+  border: 3px solid #f3b1c8;
+}
+
+.btn-light
+{
+border: 3px solid #f3b1c8;
+}
+
+.jumbotron
+{
+  background-color: #ffffff;
+}
+```
+![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq5fw6abxmj31kw0s7trk.jpg)
+![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq5fvv9543j31kw0mvn10.jpg)
+![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq5fvja1hyj31kw0vakb9.jpg)
