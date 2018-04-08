@@ -1372,3 +1372,239 @@ git add .
 git commit -m "style with bootstrap - basic"
 git push origin bootstrap-buttins
 ```
+
+bootstrap
+download the bootstrap framework
+simple bootstrap theme
+edit the navigation bar + other editing
+using firefox - not chrome
+
+getbootstrap.com
+bootstrap/docs/4.0/examples/navbar-fixed
+file:///Users/xiaowei/Downloads/bootstrap-4.0.0%202/docs/4.0/examples/navbar-fixed/index.html
+```
+index.html
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Fixed top navbar example for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="navbar-top-fixed.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Fixed navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <main role="main" class="container">
+      <div class="jumbotron">
+        <h1>Navbar example</h1>
+        <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser's viewport.</p>
+        <a class="btn btn-lg btn-primary" href="../../components/navbar/" role="button">View navbar docs &raquo;</a>
+      </div>
+    </main>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+```
+```
+navbar-top-fixed.css
+---
+/* Show it is fixed to the top */
+body {
+  min-height: 75rem;
+  padding-top: 4.5rem;
+}
+```
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq5c1ktmq7j31kw0j7dj5.jpg)
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq5c2qhbzsj30rc0kowfg.jpg)
+```
+app/views/shared/_navigation.html.erb
+---
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">Fixed navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-ligth my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+---
+app/views/layouts/application.html.erb
+---
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Barbieblog</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render 'shared/navigation'%>
+    <div class="container">
+    <%= yield %>
+    </div>
+  </body>
+</html>
+---
+```
+```
+app/assets/stylesheets/navigation.scss
+---
+.navbar
+{
+  background-color: #f31346 !important;
+}
+
+.nav-link
+{
+
+}
+
+.nav-item a
+{
+  font-weight: bold;
+  color: #f3cace;
+}
+
+.nav-item a:hover
+{
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.navbar-toggler
+{
+  border: 2px solid #ffffff !important;
+}
+---
+app/assets/stylesheets/application.scss
+---
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "bootstrap";
+@import "welcome";
+@import "navigation";
+
+
+body {
+  min-height: 75rem;
+  padding-top: 4.5rem;
+}
+
+.container
+{
+  padding-top:15px;
+}
+
+
+thead
+{
+  background-color: #dddddd;
+}
+
+.form-control
+{
+  background-color: #efeeef;
+  border: 3px solid #f3b1c8;
+}
+
+.btn-light
+{
+border: 3px solid #f3b1c8;
+}
+---
+app/assets/stylesheets/welcome.scss
+---
+.btn-welcome
+{
+  background-color: #ff0055;
+  color: #efeeef
+}
+
+.btn-welcome.hover
+{
+  background-color: #ff0044;
+  color: #ffffff;
+}
+
+h1
+{
+  margin-bottom: 20px;
+}
+```
+![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq5dautfxtj31kw0jnmz9.jpg)
+
+one more bootstrap session
+then back to ruby on rails development

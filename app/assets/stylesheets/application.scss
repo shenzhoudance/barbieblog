@@ -14,10 +14,20 @@
  *= require_self
  */
 @import "bootstrap";
+@import "welcome";
+@import "navigation";
+
+
+body {
+  min-height: 75rem;
+  padding-top: 4.5rem;
+}
+
 .container
 {
   padding-top:15px;
 }
+
 
 thead
 {
@@ -27,5 +37,10 @@ thead
 .form-control
 {
   background-color: #efeeef;
-  border: 2px solid #eeccdd;
+  border: 3px solid #f3b1c8;
+}
+
+.btn-light
+{
+border: 3px solid #f3b1c8;
 }
