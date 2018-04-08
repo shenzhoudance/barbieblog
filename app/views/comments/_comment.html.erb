@@ -1,0 +1,25 @@
+<h3> Comment Partial </h3>
+
+<h2> comments </h2>
+<% @article.comments.each do |comment| %>
+
+<p>
+<strong>commenter:</strong>
+<%= comment.commenter %>
+</p>
+<p><strong>TIME:</strong>
+    <%= comment.created_at %>
+</p>
+
+<p>
+<strong> comment</strong>
+<%= comment.body %>
+</p>
+
+<p>
+  <%= link_to 'Delete comment',[comment.article, comment],
+           method: :delete,
+           data: { confirm: 'Are you sure?' } %>
+</p>
+
+<% end %>

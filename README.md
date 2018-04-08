@@ -845,3 +845,199 @@ git commit -m "added vaildations to create article"
 git push origin comment
 ```
 ![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq4znohn1bj31ea0nq44k.jpg)
+
+creating partials
+adding created at times
+adding basic security
+errors!!!
+next time -bootstarp 4!!
+
+# SECTION 8
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+creating partials
+snippits of html/ruby code stored
+in one html.erb file and called
+upon in another html.erb file
+
+```
+git checkout -b partials-form
+---
+app/views/articles/show.html.erb
+---
+
+<p><strong>title</strong>
+  <%= @article.title %>
+</p>
+<p><strong>TIME:</strong>
+    <%= @article.created_at %>
+</p>
+
+<p><strong>Text:</strong>
+    <%= @article.text %>
+</p>
+
+<hr>
+<%= render 'comments/comment' %>
+<hr>
+<%= render 'comments/form' %>
+
+<p>
+<%= link_to 'back', articles_path %>
+<%= link_to 'home', welcome_index_path %>
+</p>
+---
+app/views/comments/_form.html.erb
+---
+<!-- form partial for comments -->
+<h3> The Rendered Form</h3>
+<h2> add comment</h2>
+<%= form_for([@article,@article.comments.build]) do |f| %>
+<p>
+  <%= f.label :commenter %>
+  <%= f.text_field :commenter %>
+</p>
+
+<p>
+  <%= f.label :body %>
+  <%= f.text_area :body %>
+</p>
+
+<p>
+  <%= f.submit %>
+</p>
+  <% end %>
+---
+app/views/comments/_comment.html.erb
+---
+<h3> Comment Partial </h3>
+
+<h2> comments </h2>
+<% @article.comments.each do |comment| %>
+
+<p>
+<strong>commenter:</strong>
+<%= comment.commenter %>
+</p>
+<p><strong>TIME:</strong>
+    <%= comment.created_at %>
+</p>
+
+<p>
+<strong> comment</strong>
+<%= comment.body %>
+</p>
+
+<p>
+  <%= link_to 'Delete comment',[comment.article, comment],
+           method: :delete,
+           data: { confirm: 'Are you sure?' } %>
+</p>
+
+<% end %>
+---
+```
+![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq514h898pj30ls0usdhq.jpg)
+
+basic http
+authenication
+preventing visitors from
+creating,editing,deleting articles
+add deleting comments
+```
+app/controllers/articles_controller.rb
+---
+class ArticlesController < ApplicationController
+http_basic_authenticate_with name: "xiaowei", password: "123456",
+except: [:index, :show]
+
+  def index
+    @article = Article.all
+    end
+
+  def new
+    @article = Article.new
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def edit
+      @article = Article.find(params[:id])
+  end
+
+  def update
+      @article = Article.find(params[:id])
+      if @article.update(article_params)
+         redirect_to @article
+      else
+        render 'edit'
+    end
+  end
+
+
+
+  def create
+    #render plain: params[:article].inspect
+    @article = Article.new(article_params)
+    if @article.save
+    redirect_to @article
+   else
+    render 'new'
+   end
+  end
+
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to articles_path
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:text)
+  end
+
+  end
+---
+app/controllers/comments_controller.rb
+---
+class CommentsController < ApplicationController
+  http_basic_authenticate_with name: "xiaowei", password: "12345678",
+  except: [:index, :show]
+
+ def create
+   @article = Article.find(params[:article_id])
+   @comment = @article.comments.create(comment_params)
+   redirect_to article_path(@article)
+ end
+
+
+ def destroy
+    @article = Article.find(params[:article_id])
+    @comment = @article.comments.find(params[:id])
+    @comment.destroy
+    redirect_to article_path(@article)
+
+ end
+
+private
+
+  def comment_params
+    params.require(:comment).permit(:commenter, :body)
+  end
+
+end
+---
+```
+```
+git status
+git add .
+git commit -m "made partials of comment form & http security"
+git push origin partials-form
+```
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq51mkwhwwj31ke0n2tbu.jpg)
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq51l2wrxpj31k00t4jze.jpg)
