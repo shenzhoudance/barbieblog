@@ -1365,3 +1365,10 @@ thead
 ![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq5atduy4yj31kw0rhjuz.jpg)
 ![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq5at7dse0j31kw0n5dhx.jpg)
 ![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq5asqqkmqj31kw0xojvv.jpg)
+
+```
+git status
+git add .
+git commit -m "style with bootstrap - basic"
+git push origin bootstrap-buttins
+```
