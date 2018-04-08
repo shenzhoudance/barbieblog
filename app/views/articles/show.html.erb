@@ -1,3 +1,6 @@
+<div class="row">
+  <div class="col"></div>
+    <div class="col-md-7">
 
 <p><strong>title</strong>
   <%= @article.title %>
@@ -16,9 +19,11 @@
 <%= render 'comments/form' %>
 
 
-
-
 <p>
-<%= link_to 'back', articles_path %>
-<%= link_to 'home', welcome_index_path %>
+<%= link_to 'Back', articles_path, class:'btn btn-md btn-info' %>
+<%= link_to 'Home', welcome_index_path, class:'btn btn-md btn-primary' %>
 </p>
+
+</div><!-- col-md-7 -->
+ <div class="col"></div>
+</div><!-- row -->

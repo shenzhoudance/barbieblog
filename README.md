@@ -1095,3 +1095,280 @@ git add .
 git commit -m "added bootstrap gem and sprockets gem and updated bundle and added bootstarp to scss and js files "
 git push origin bootstarp
 ```
+![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq52wcvnp0j31d40c6q6i.jpg)
+
+# SECTION 10
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+```
+git checkout -b bootstrap-buttins
+app/views/layouts/application.html.erb
+---
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Barbieblog</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+    <%= yield %>
+    </div>
+  </body>
+</html>
+---
+app/views/welcome/index.html.erb
+---
+<div class="row" style="padding-top:20%;">
+  <div class="col"></div>
+  <div class="col-md-7 text-center">
+    <h1>欢迎来到才华横溢的世界</h1>
+    <p><%= link_to '进入我的世界', articles_path, class: "btn btn-lg btn-danger" %></p>
+  </div><!-- col-md-7 -->
+   <div class="col"></div>
+</div><!-- row -->
+---
+app/views/comments/_comment.html.erb
+---
+<h3> Comment Partial </h3>
+
+<h2> comments </h2>
+<% @article.comments.each do |comment| %>
+
+<p>
+<strong>commenter:</strong>
+<%= comment.commenter %>
+</p>
+<p><strong>TIME:</strong>
+    <%= comment.created_at %>
+</p>
+
+<p>
+<strong> comment</strong>
+<%= comment.body %>
+</p>
+
+<p>
+  <%= link_to 'Delete comment',[comment.article, comment],
+           class:'btn btn-sm btn-danger',
+           method: :delete,
+           data: { confirm: 'Are you sure?' } %>
+</p>
+
+<% end %>
+---
+app/views/comments/_form.html.erb
+---
+<!-- form partial for comments -->
+<h3> The Rendered Form</h3>
+<h2> add comment</h2>
+<%= form_for([@article,@article.comments.build]) do |f| %>
+<div class="field" style="100%;">
+
+</div>
+
+<p>
+  <%= f.label :commenter %>
+  <%= f.text_field :commenter, class: "form-control" %>
+</p>
+
+<p>
+  <%= f.label :body %>
+  <%= f.text_area :body, class: "form-control" %>
+</p>
+
+<p>
+  <%= f.submit class: "btn btn-lg btn-success" %>
+</p>
+  <% end %>
+---
+```
+```
+app/views/articles/index.html.erb
+---
+<div class="row">
+  <div class="col"></div>
+    <div class="col-md-10">
+
+<h1>list of all article</h1>
+<p>
+  <%= link_to 'Create NEW Article', new_article_path, class:'btn btn-lg btn-info' %>
+</p>
+  <table class="table table-hover">
+    <tr>
+      <th>title</th>
+      <th>text</th>
+      <th colspan="3">Editing option</th>
+    <tr>
+
+  <% @article.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= truncate(article.text, length: 75) %></td>
+      <td><%= link_to 'show', article_path(article), class:'btn btn-sm btn-info' %></td>
+      <td><%= link_to 'edit', edit_article_path(article), class:'btn btn-sm btn-warning' %></td>
+      <td><%= link_to 'Delete',article_path(article),
+               method: :delete,
+               data: { confirm: 'Are you sure?' } ,class:'btn btn-sm btn-danger'%>
+       </td>
+    </tr>
+    <% end %>
+</table>
+
+<p>
+<%= link_to 'home', welcome_index_path, class:'btn btn-sm btn-primary' %>
+<%= link_to 'new', new_article_path %>
+</p>
+
+</div><!-- col-md-10 -->
+ <div class="col"></div>
+</div><!-- row -->
+---
+app/views/articles/new.html.erb
+---
+<div class="row" style="padding-top:10%;">
+  <div class="col"></div>
+    <div class="col-md-7">
+
+      <h1>Create A  new Articles</h1>
+<%= form_for :article, url: articles_path do |f| %>
+<div class="field" style="100%;">
+<!-- checking for errors -->
+<% if @article.errors.any? %>
+<div id="error_explanation">
+  <h2>
+    <%= pluralize(@article.errors.count, "error") %>
+     prohibited this article from being saved:
+   </h2>
+    <p>
+   <ul>
+     <% @article.errors.full_messages.each do |msg| %>
+     <li>
+       <%= msg %>
+     </li>
+   </ul>
+      <% end %>
+    </p>
+
+</div>
+      <% end %>
+  <p>
+    <%= f.label :title %> <br>
+    <%= f.text_field :title, class: "form-control" %>
+  </p>
+  <p>
+    <%= f.label :text %> <br>
+    <%= f.text_area :text, class: "form-control"  %>
+  </p>
+  <p>
+    <%= f.submit class: "btn btn-lg btn-success" %>
+  </p>
+
+</div><!-- field -->
+<% end %>
+
+<p>
+<%= link_to 'Back', articles_path, class:'btn btn-md btn-info' %>
+<%= link_to 'Home', welcome_index_path, class:'btn btn-md btn-primary' %>
+</p>
+
+</div><!-- col-md-7 -->
+ <div class="col"></div>
+</div><!-- row -->
+---
+app/views/articles/show.html.erb
+---
+<div class="row">
+  <div class="col"></div>
+    <div class="col-md-7">
+
+<p><strong>title</strong>
+  <%= @article.title %>
+</p>
+<p><strong>TIME:</strong>
+    <%= @article.created_at %>
+</p>
+
+<p><strong>Text:</strong>
+    <%= @article.text %>
+</p>
+
+<hr>
+<%= render 'comments/comment' %>
+<hr>
+<%= render 'comments/form' %>
+
+
+<p>
+<%= link_to 'Back', articles_path, class:'btn btn-md btn-info' %>
+<%= link_to 'Home', welcome_index_path, class:'btn btn-md btn-primary' %>
+</p>
+
+</div><!-- col-md-7 -->
+ <div class="col"></div>
+</div><!-- row -->
+---
+app/views/articles/edit.html.erb
+---
+<div class="row" style="padding-top:10%;">
+  <div class="col"></div>
+    <div class="col-md-7">
+      <h1>edit Articles</h1>
+      <%= render 'form' %>
+</div><!-- col-md-7 -->
+ <div class="col"></div>
+</div><!-- row -->
+---
+app/views/articles/_form.html.erb
+<%= form_for @article do |f| %>
+  <p>
+    <%= f.label :title %> <br>
+    <%= f.text_field :title, class: "form-control"  %>
+  </p>
+  <p>
+    <%= f.label :text %> <br>
+    <%= f.text_area :text, class: "form-control" %>
+  </p>
+  <p>
+    <%= f.submit class: "btn btn-lg btn-success" %>
+  </p>
+<% end %>
+---
+```
+```
+app/assets/stylesheets/application.scss
+---
+@import "bootstrap";
+.container
+{
+  padding-top:15px;
+}
+
+thead
+{
+  background-color: #dddddd;
+}
+
+.form-control
+{
+  background-color: #efeeef;
+  border: 2px solid #eeccdd;
+}
+---
+```
+![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq5atjz892j31kw0kqjtj.jpg)
+![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq5atduy4yj31kw0rhjuz.jpg)
+![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq5at7dse0j31kw0n5dhx.jpg)
+![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq5asqqkmqj31kw0xojvv.jpg)
+
+```
+git status
+git add .
+git commit -m "style with bootstrap - basic"
+git push origin bootstrap-buttins
+```
