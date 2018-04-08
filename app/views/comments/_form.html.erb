@@ -2,17 +2,21 @@
 <h3> The Rendered Form</h3>
 <h2> add comment</h2>
 <%= form_for([@article,@article.comments.build]) do |f| %>
+<div class="field" style="100%;">
+
+</div>
+
 <p>
   <%= f.label :commenter %>
-  <%= f.text_field :commenter %>
+  <%= f.text_field :commenter, class: "form-control" %>
 </p>
 
 <p>
   <%= f.label :body %>
-  <%= f.text_area :body %>
+  <%= f.text_area :body, class: "form-control" %>
 </p>
 
 <p>
-  <%= f.submit %>
+  <%= f.submit class: "btn btn-lg btn-success" %>
 </p>
   <% end %>

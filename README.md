@@ -1095,3 +1095,11 @@ git add .
 git commit -m "added bootstrap gem and sprockets gem and updated bundle and added bootstarp to scss and js files "
 git push origin bootstarp
 ```
+![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq52wcvnp0j31d40c6q6i.jpg)
+
+# SECTION 10
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+```
+git checkout -b bootstrap-buttins
