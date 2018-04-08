@@ -724,3 +724,121 @@ git status
 git add .
 git commit -m "added the ability to destroy a comments"
 git push origin comment
+```
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq4yq04a84j31fg0m6wk9.jpg)
+
+form validation
+requirements on a form
+to be submitted
+```
+app/models/article.rb
+---
+class Article < ApplicationRecord
+  has_many :comments, dependent: :destroy
+  validates :title, presence: true,
+              length: {minimum: 3}
+  validates :text, presence: true,
+              length: {minimum: 2}
+end
+---
+app/controllers/articles_controller.rb
+---
+class ArticlesController < ApplicationController
+  def index
+    @article = Article.all
+    end
+
+  def new
+    @article = Article.new
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def edit
+      @article = Article.find(params[:id])
+  end
+
+  def update
+      @article = Article.find(params[:id])
+      if @article.update(article_params)
+         redirect_to @article
+      else
+        render 'edit'
+    end
+  end
+
+
+
+  def create
+    #render plain: params[:article].inspect
+    @article = Article.new(article_params)
+    if @article.save
+    redirect_to @article
+   else
+    render 'new'
+   end
+  end
+
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to articles_path
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:text)
+  end
+
+  end
+---
+app/views/articles/new.html.erb
+---
+<h1>Create A  new Articles</h1>
+<%= form_for :article, url: articles_path do |f| %>
+
+<!-- checking for errors -->
+<% if @article.errors.any? %>
+<div id="error_explanation">
+  <h2>
+    <%= pluralize(@article.errors.count, "error") %>
+     prohibited this article from being saved:
+   </h2>
+    <p>
+   <ul>
+     <% @article.errors.full_messages.each do |msg| %>
+     <li>
+       <%= msg %>
+     </li>
+   </ul>
+      <% end %>
+    </p>
+</div>
+      <% end %>
+  <p>
+    <%= f.label :title %> <br>
+    <%= f.text_field :title  %>
+  </p>
+  <p>
+    <%= f.label :text %> <br>
+    <%= f.text_area :text %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+<p>
+<%= link_to 'back', articles_path %>
+<%= link_to 'home', welcome_index_path %>
+</p>
+
+```
+```
+git status
+git add .
+git commit -m "added vaildations to create article"
+git push origin comment
