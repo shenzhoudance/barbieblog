@@ -1,9 +1,13 @@
 
 <h1>list of all article</h1>
+<p>
+  <%= link_to 'Create NEW Article', new_article_path %>
+</p>
   <table>
     <tr>
       <th>title</th>
       <th>text</th>
+      <th colspan="3">Editing option</th>
     <tr>
 
   <% @article.each do |article| %>
