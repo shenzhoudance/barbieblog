@@ -837,8 +837,11 @@ app/views/articles/new.html.erb
 </p>
 
 ```
+![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq4znyg93sj30w00my763.jpg)
 ```
 git status
 git add .
 git commit -m "added vaildations to create article"
 git push origin comment
+```
+![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq4znohn1bj31ea0nq44k.jpg)
