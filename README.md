@@ -1041,3 +1041,34 @@ git push origin partials-form
 ```
 ![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq51mkwhwwj31ke0n2tbu.jpg)
 ![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq51l2wrxpj31k00t4jze.jpg)
+
+
+bootstarp 4
+adding gems
+modefy assets
+styles and js files
+
+# SECTION 9
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+```
+git checkout -b bootstrap
+https://rubygems.org/gems/bootstrap
+https://rubygems.org/gems/sprockets-rails
+gem 'bootstrap', '~> 4.0'
+gem install bootstrap
+gem 'sprockets-rails', '~> 3.2', '>= 3.2.1'
+gem install sprockets-rails
+bundle installl
+```
+
+1、paste
+gem 'jquery-rails','~> 4.3', '>= 4.3.1'
+into the gemfile
+2、paste
+gem install jquery-rails
+into the Terminal
+3、in the terminl type
+bundle install
+to make use of the gem
