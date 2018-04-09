@@ -2027,3 +2027,104 @@ git add .
 git commit -m "add styled bootstrap:home page,table,image,links,navigation,and footer."
 git push origin footer
 ```
+
+helper methods
+adding a custom helper methods
+calling the helper from navigation
+understanding passing of arguments
+
+# SECTION 12
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+
+```
+git checkout -b helper-methods
+---
+app/helpers/application_helper.rb
+---
+module ApplicationHelper
+
+  # if on active page color = white
+  # if not on active page color = require
+  # take arguments: 'link','what page its on','url''change font color'
+
+  def active_link_to(nav_link, contrl, action, url, style)
+    if controller_name == contrl && action_name == action
+      return link_to nav_link, url, id: style
+    else
+      return link_to nav_link, url, class: style
+    end
+  end
+end
+---
+app/views/shared/_navigation.html.erb
+---
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">xiaoweiblog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <!-- nav_link, action, url, style -->
+      <%= active_link_to 'Home','welcome','index',welcome_index_path, 'active_nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= active_link_to 'Blog', 'articles','index', articles_path, 'active_nav-link' %>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-ligth my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+---
+app/assets/stylesheets/navigation.scss
+---
+.navbar
+{
+  background-color: #f31346 !important;
+}
+
+.nav-link
+{}
+
+#active_nav-link
+{
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #ffffff !important;
+}
+
+.active_nav-link
+{
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #f3cace !important;
+}
+
+
+.nav-item a
+{
+  font-weight: bold;
+  color: #f3cace !important;
+}
+
+.nav-item a:hover
+{
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.navbar-toggler
+{
+  border: 2px solid #ffffff !important;
+}
+---
+```
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq6gmtawhmj31kw0thqq5.jpg)

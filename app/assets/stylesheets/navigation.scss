@@ -4,14 +4,27 @@
 }
 
 .nav-link
-{
+{}
 
+#active_nav-link
+{
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #ffffff !important;
 }
+
+.active_nav-link
+{
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #f3cace !important;
+}
+
 
 .nav-item a
 {
   font-weight: bold;
-  color: #f3cace;
+  color: #f3cace !important;
 }
 
 .nav-item a:hover
