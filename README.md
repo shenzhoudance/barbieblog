@@ -2130,3 +2130,9 @@ app/assets/stylesheets/navigation.scss
 ![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq6gmtawhmj31kw0thqq5.jpg)
 
 ```
+git status
+git add .
+git commit -m "added a custom helper method for
+active links in navigation bar"
+git push origin helper-methods
+```
