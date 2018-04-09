@@ -2020,3 +2020,10 @@ app/assets/stylesheets/footer.scss
 }
 ---
 ```
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq67i5w2bdj31kw0vce2w.jpg)
+![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq67hx1btkj31kw0okn0y.jpg)
+```
+git add .
+git commit -m "add styled bootstrap:home page,table,image,links,navigation,and footer."
+git push origin footer
+```
