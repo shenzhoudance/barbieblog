@@ -1832,3 +1832,198 @@ border: 3px solid #f3b1c8;
 ![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq5fw6abxmj31kw0s7trk.jpg)
 ![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq5fvv9543j31kw0mvn10.jpg)
 ![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq5fvja1hyj31kw0vakb9.jpg)
+
+```
+git checkout -b layout-scss
+git add .
+git commit -m "added layout-scss"
+git push origin layout-scss
+```
+![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq5fz68bapj31b20jsdl7.jpg)
+
+bootstarap 4
+build custom footer
+closer look at column division
+modify column properties
+style the footer
+
+```
+git checkout -b footer
+app/views/shared/_footer.html.erb
+---
+<section class="foot" >
+  <div class="row" style="padding-top:8%;">
+    <div class="col-md-4 darker">
+      <div class="col-md-12 padding white">
+        <h4>general info</h4>
+        <hr>
+        <h5 class="linktxt">address line 1</h5>
+        <h5 class="linktxt">address line 2</h5>
+        <h5 class="linktxt">address line 3</h5>
+        <hr>
+        <p class="small-font grey">&copy; superxschool.com 2017 all rigths reserved</p>
+      </div>
+    </div> <!-- col-md-4 -->
+
+    <div class="col-md-4">
+      <div class="col-md-12 padding white">
+        <h4>subscribe</h4>
+        <hr>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2"
+                 type="text"
+                 placeholder="input your email" aria-label="email"
+                 style="margin-buttom:10px; width:100%;"><br>
+          <button class="btn btn-ligth my-2 my-sm-0" type="submit">Submit</button>
+        </form>
+      </div>
+    </div><!-- col-md-4 -->
+
+    <div class="col-md-4 dark">
+      <div class="col-md-12 padding white">
+        <h4>social</h4>
+        <hr>
+        <h5><%= link_to 'facebook',welcome_index_path, class:"inktxt" %></h5>
+        <h5>twitter</h5>
+        <h5>youtube</h5>
+      </div>
+    </div><!-- col-md-4 -->
+
+  </div><!-- row -->
+</section>
+---
+app/views/welcome/index.html.erb
+---
+<div class="row" style="padding-top:8%;">
+  <div class="col"></div>
+  <div class="col-md-8 text-center">
+    <%= image_tag 'YAN-JIANG.jpg', style:"width:100%" %>
+    <div class="jumbotron">
+
+
+    <h1>欢迎来到才华横溢的世界</h1>
+    <p><%= link_to '进入我的世界', articles_path, class: "btn btn-lg btn-welcome" %></p>
+      </div><!-- jumbotron -->
+    </div><!-- col-md-7 -->
+   <div class="col"></div>
+</div><!-- row -->
+---
+app/views/layouts/application.html.erb
+---
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Barbieblog</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render 'shared/navigation'%>
+    <div class="container">
+    <%= yield %>
+    </div>
+    <%= render 'shared/footer'%>
+  </body>
+</html>
+---
+```
+```
+app/assets/stylesheets/application.scss
+---
+@import "bootstrap";
+@import "welcome";
+@import "navigation";
+@import "footer";
+
+body {
+  min-height: 50rem;
+  padding-top: 4.5rem;
+  background-color: #ffddee;
+  overflow-x: hidden;
+}
+
+.white
+{
+ color: #ffffff;
+}
+
+.grey
+{
+  color:#ddcccc;
+}
+
+.small.font
+{
+  font-size: 11px;
+}
+.linktxt
+{
+  color: #deddee;
+}
+
+.linktx:hover
+{
+  color: #ffffff;
+}
+
+.container
+{
+  padding-top:15px;
+}
+
+
+thead
+{
+  background-color: #553344;
+  color: #ffffff;
+}
+
+.form-control
+{
+  background-color: #efeeef;
+  border: 3px solid #f3b1c8;
+}
+
+.btn-light
+{
+border: 3px solid #f3b1c8;
+}
+
+.jumbotron
+{
+  background-color: #ffffff;
+}
+---
+app/assets/stylesheets/footer.scss
+---
+.footer
+{
+  background-color: #f31346
+  min-height": 10rem;"
+  margin-top": 2rem;"
+}
+
+.col-md-4
+{
+  min-width: 10rem;
+  padding: 0;
+  margin: 0;
+}
+
+.padding
+{
+  padding:2rem;
+  padding-bottom: 1rem;
+}
+---
+```
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq67i5w2bdj31kw0vce2w.jpg)
+![image](https://ws1.sinaimg.cn/large/006tKfTcgy1fq67hx1btkj31kw0okn0y.jpg)
+```
+git add .
+git commit -m "add styled bootstrap:home page,table,image,links,navigation,and footer."
+git push origin footer
+```
