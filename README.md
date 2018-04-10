@@ -2318,7 +2318,7 @@ app/views/articles/search.html.erb
 </div><!-- col-md-10 -->
  <div class="col"></div>
 </div><!-- row -->
----
+---sc
 ```
 ![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq7lq236pkj31kw0q2jvg.jpg)
 ![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq7lqhervnj31kw0gggoj.jpg)
@@ -2328,4 +2328,179 @@ git status
 git add .
 git commit -m "created a working search button"
 git push origin search
+```
+
+
+
+accept subscribers
+model/view/controller + routes(session3)
+create subscribe form for input info
+save subscriber info in database
+list all subscribes(private page)
+errors! left spelling errors for learning process
+
+# section 14
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+```
+git checkout -b subscriber
+rails g model subscriber f_name:string l_name:string email:string  country:string
+rake db:migrate
+
+config/routes.rb
+---
+Rails.application.routes.draw do
+  get 'welcome/index'
+  root 'welcome#index'
+
+  resources :articles do
+    resources :comments
+     collection do
+      get :search # creates a new path for the searching
+    end
+  end
+  resources :subscribers
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+end
+---
+app/controllers/subscribers_controller.rb
+---
+class SubscribersController < ApplicationController
+
+ def index
+ end
+
+ def create
+   @subscriber = Subscriber.new(subscriber_params)
+   #check if emall exists in database table
+   if Subscriber.exists?(emall: @subscriber.email)
+     redirect_to root_path, alert:
+     "sorry ,that emall allready exists!"
+   elsif @subscriber.save
+     redirect_to root_path, notice:
+     "thank you #{@subscriber.f_name}, for subscriber to my newslatter!"
+   else
+     redirect_to root_path, alert:
+     "sorry, I failed to save your information. please try again"
+   end
+ end
+
+ # do destroy later
+
+ private
+
+  def subscriber_params
+    params.require(:subscriber).permit(:f_name, :l_name, :email, :country)
+  end
+
+end
+---
+app/models/subscriber.rb
+---
+class Subscriber < ApplicationRecord
+  validates :f_name, :l_name, :emall, :country,
+            presence: true
+end
+---
+app/views/layouts/application.html.erb
+---
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Barbieblog</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render 'shared/navigation'%>
+    <div class="container">
+      <div class="show_notice">
+        <% if notice %>
+        <%= notice %>
+        <% end %>
+      </div>
+
+      <div class="show_alert">
+        <% if alert %>
+        <%= alert %>
+        <% end %>
+      </div>
+
+    <%= yield %>
+    </div>
+    <%= render 'shared/footer'%>
+  </body>
+</html>
+
+---
+app/views/shared/_footer.html.erb
+---
+<section class="foot" >
+  <div class="row" style="padding-top:8%;">
+    <div class="col-md-4 darker">
+      <div class="col-md-12 padding white">
+        <h4>General info</h4>
+        <hr>
+        <h5 class="linktxt">address line 1</h5>
+        <h5 class="linktxt">address line 2</h5>
+        <h5 class="linktxt">address line 3</h5>
+        <hr>
+        <p class="small-font grey">&copy; superxschool.com 2017 all rigths reserved</p>
+      </div>
+    </div> <!-- col-md-4 -->
+
+    <div class="col-md-4 navbar">
+      <div class="col-md-12 padding white">
+        <h4>Subscribe</h4>
+        <hr>
+<%= form_for :subscriber, url: subscribers_path do |f| %>
+<%= f.text_field :f_name, placeholder: "first name",
+                  class: "form-control mr-sm-2" %>
+<%= f.text_field :f_name, placeholder: "last name",
+                  class: "form-control mr-sm-2" %>
+<%= f.text_field :email, placeholder: "your email",
+                  class: "form-control mr-sm-2" %>
+<%= f.select :country,
+options_for_select(['Countr1','Countr2','Countr3','Countr4']),
+                  prompt: 'select your country' %>
+<%= f.submit 'submit', class: "btn btn-ligth my-2 my-sm-0" %>
+<% end %>
+
+  <!--      <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2"
+                 type="text"
+                 placeholder="input your email" aria-label="email"
+                 style="margin-buttom:10px; width:100%;"><br>
+          <button class="btn btn-ligth my-2 my-sm-0" type="submit">Submit</button>
+        </form>
+    -->
+      </div>
+    </div><!-- col-md-4 -->
+
+    <div class="col-md-4 dark">
+      <div class="col-md-12 padding white">
+        <h4>Social</h4>
+        <hr>
+        <h5><%= link_to 'facebook',welcome_index_path, class:"inktxt" %></h5>
+        <h5>twitter</h5>
+        <h5>youtube</h5>
+      </div>
+    </div><!-- col-md-4 -->
+
+  </div><!-- row -->
+</section>
+
+---
+app/views/subscriber/index.html.erb
+---
+<h2> hello from subscriber index.html.erb</h2>
+---
+```
+![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq7qyb1355j31kw0prqpw.jpg)
+![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq7qy5r5jpj31kw0bimzg.jpg)
+
+```
 ```
