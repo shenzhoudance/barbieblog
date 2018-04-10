@@ -2,10 +2,8 @@
   <div class="col"></div>
     <div class="col-md-10">
 
-<h1>list of all article</h1>
-<p>
-  <%= link_to 'Create NEW Article', new_article_path, class:'btn btn-lg btn-info' %>
-</p>
+<h1>list of articles matching  your search world</h1>
+
   <table class="table table-hover table-striped table-responsive-xs table-danger">
 <thead>
     <tr>
@@ -29,8 +27,7 @@
 </table>
 
 <p>
-<%= link_to 'home', welcome_index_path, class:'btn btn-sm btn-primary' %>
-<%= link_to 'new', new_article_path %>
+<%= link_to 'back to all article', articles_path, class:'btn btn-sm btn-primary' %>
 </p>
 
 </div><!-- col-md-10 -->

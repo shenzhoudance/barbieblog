@@ -2136,3 +2136,196 @@ git commit -m "added a custom helper method for
 active links in navigation bar"
 git push origin helper-methods
 ```
+
+working search form
+edit routes file
+create a method in a article model file
+add a search action in articles controller
+add a correspondig search view file
+some errors
+
+# SECTION 13
+GETTING STARTED WITH RAILS
+based on guides.rubyonrails.org
+```
+git checkout -b search
+---
+config/routes.rb
+---
+Rails.application.routes.draw do
+  get 'welcome/index'
+  root 'welcome#index'
+  resources :articles do
+    resources :comments
+     collection do
+      get :search # creates a new path for the searching
+    end
+  end
+end
+---
+app/models/article.rb
+---
+class Article < ApplicationRecord
+  has_many :comments, dependent: :destroy
+  validates :title, presence: true,
+              length: {minimum: 3}
+  validates :text, presence: true,
+              length: {minimum: 2}
+
+   def self.search(params)
+   articles = Article.where("text LIKE ? or title LIKE ?", "%#{params[:search]}%",
+             "%#{params[:search]}%") if params[:search].present?
+   articles # returns the articles containing the search words
+ end
+end
+---
+---
+app/views/shared/_navigation.html.erb
+---
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="#">xiaoweiblog</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <!-- nav_link, action, url, style -->
+      <%= active_link_to 'Home','welcome','index',welcome_index_path, 'active_nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= active_link_to 'Blog', 'articles','index', articles_path, 'active_nav-link' %>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+    </ul>
+    <div class="form-inline mt-2 mt-md-0">
+      <%= form_tag search_articles_path, method: :get do %>
+      <%= text_field_tag :search, nil, placeholder: "Search", class: "form-control mr-sm-2" %>
+      <%= submit_tag "Search", class: "btn btn-ligth my-2 my-sm-0" %>
+    <% end %>
+    </div>
+
+  <!--  <form class="form-inline mt-2 mt-md-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-ligth my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  -->
+  </div>
+</nav>
+---
+app/controllers/articles_controller.rb
+---
+class ArticlesController < ApplicationController
+http_basic_authenticate_with name: "xiaowei", password: "123456",
+except: [:index, :show, :search]
+
+  def index
+    @articles = Article.all
+  end
+
+  def new
+    @article = Article.new
+  end
+
+  def show
+    @article = Article.find(params[:id])
+  end
+
+  def edit
+      @article = Article.find(params[:id])
+  end
+
+
+  def search
+    if params[:search].blank?
+      @articles = Article.all
+    else
+      @articles = Article.search(params)
+    end
+  end
+
+
+  def update
+      @article = Article.find(params[:id])
+      if @article.update(article_params)
+         redirect_to @article
+      else
+        render 'edit'
+    end
+  end
+
+
+
+  def create
+    #render plain: params[:article].inspect
+    @article = Article.new(article_params)
+    if @article.save
+    redirect_to @article
+   else
+    render 'new'
+   end
+  end
+
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to articles_path
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title,:text)
+  end
+
+  end
+---
+app/views/articles/search.html.erb
+<div class="row">
+  <div class="col"></div>
+    <div class="col-md-10">
+
+<h1>list of articles matching  your search world</h1>
+
+  <table class="table table-hover table-striped table-responsive-xs table-danger">
+<thead>
+    <tr>
+      <th>title</th>
+      <th>text</th>
+      <th colspan="3">Editing option</th>
+    <tr>
+</thead>
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= truncate(article.text, length: 75) %></td>
+      <td><%= link_to 'show', article_path(article), class:'btn btn-sm btn-info' %></td>
+      <td><%= link_to 'edit', edit_article_path(article), class:'btn btn-sm btn-warning' %></td>
+      <td><%= link_to 'Delete',article_path(article),
+               method: :delete,
+               data: { confirm: 'Are you sure?' } ,class:'btn btn-sm btn-danger'%>
+       </td>
+    </tr>
+    <% end %>
+</table>
+
+<p>
+<%= link_to 'back to all article', articles_path, class:'btn btn-sm btn-primary' %>
+</p>
+
+</div><!-- col-md-10 -->
+ <div class="col"></div>
+</div><!-- row -->
+---
+```
+![image](https://ws4.sinaimg.cn/large/006tKfTcgy1fq7lq236pkj31kw0q2jvg.jpg)
+![image](https://ws3.sinaimg.cn/large/006tKfTcgy1fq7lqhervnj31kw0gggoj.jpg)
+![image](https://ws2.sinaimg.cn/large/006tKfTcgy1fq7lqa7pu3j31kw0cj0up.jpg)
+```
+git status
+git add .
+git commit -m "created a working search button"
+git push origin search
+```

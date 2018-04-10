@@ -1,10 +1,10 @@
 class ArticlesController < ApplicationController
 http_basic_authenticate_with name: "xiaowei", password: "123456",
-except: [:index, :show]
+except: [:index, :show, :search]
 
   def index
-    @article = Article.all
-    end
+    @articles = Article.all
+  end
 
   def new
     @article = Article.new
@@ -17,6 +17,16 @@ except: [:index, :show]
   def edit
       @article = Article.find(params[:id])
   end
+
+
+  def search
+    if params[:search].blank?
+      @articles = Article.all
+    else
+      @articles = Article.search(params)
+    end
+  end
+
 
   def update
       @article = Article.find(params[:id])
